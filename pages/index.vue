@@ -1,21 +1,24 @@
 <template>
-    <div class="title">
-      <h1>Studio 9</h1>
-    </div>
+  <div class="canvas-cont">
+    <canvas id="canvas3d"></canvas>
+  </div>
+</template>
 
-    <ContactForm/>
-  </template>
-  
+<script>
+import { Application } from '@splinetool/runtime';
 
+export default {
+  mounted() {
+    // Access the document and create Application after the component has been mounted
+    const canvas = document.getElementById('canvas3d');
+    const app = new Application(canvas);
+    app.load('https://draft.spline.design/ruREpqhankik9NyJ/scene.splinecode');
+  },
+};
+</script>
 
-  <script>
-  export default{
-  }
-  </script>
-
-
-<style>
-.title{
+<style scoped>
+.title {
   color: white;
   display: flex;
   align-items: center;
@@ -24,9 +27,7 @@
   font-size: 5rem;
 }
 
-.title h1{
+.title h1 {
   margin-top: 150px;
 }
-
-
 </style>
