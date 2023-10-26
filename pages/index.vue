@@ -17,17 +17,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.title {
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Syne';
-  font-size: 5rem;
-}
-
-.title h1 {
-  margin-top: 150px;
+<style>
+.canvas-cont{
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
