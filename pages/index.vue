@@ -1,6 +1,8 @@
 <template>
+  <Header></Header>
   <div class="canvas-cont">
-    <canvas id="canvas3d"></canvas>
+    <canvas id="canvas3d">
+    </canvas>
   </div>
 </template>
 
@@ -12,13 +14,16 @@ export default {
     // Access the document and create Application after the component has been mounted
     const canvas = document.getElementById('canvas3d');
     const app = new Application(canvas);
-    app.load('https://draft.spline.design/ruREpqhankik9NyJ/scene.splinecode');
+    app.load('https://draft.spline.design/nykA0EwxiRpgdncC/scene.splinecode');
   },
 };
 </script>
 
 <style>
-.canvas-cont{
+body{
+  background-color: black;
+}
+#canvas3d{
   background-color: black;
   width: 100vw;
   height: 100vh;
