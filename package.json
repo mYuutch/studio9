@@ -19,6 +19,7 @@
   "dependencies": {
     "@splinetool/runtime": "^0.9.489",
     "three": "^0.158.0",
+    "three-bmfont-text": "^3.0.1",
     "vercel": "^32.5.0",
     "vue3-toastify": "^0.1.13"
   }

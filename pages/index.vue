@@ -41,7 +41,11 @@ const camera = new THREE.PerspectiveCamera(
 )
 camera.position.z = 2
 
-const renderer = new THREE.WebGLRenderer()
+/*const renderer = new THREE.WebGLRenderer({ alpha: true });
+renderer.setClearColor(0x000000, 0); // 0 as the second parameter makes the background fully transparent*/
+
+const renderer = new THREE.WebGLRenderer({ alpha: true})
+renderer.setClearColor(0x000000, 0);
 renderer.shadowMap.enabled = true
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
@@ -49,19 +53,49 @@ document.body.appendChild(renderer.domElement)
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 
-const loader = new GLTFLoader()
-loader.load(
+  const loader = new GLTFLoader()
+  loader.load(
     '/cube.glb',
     function (gltf) {
-        scene.add(gltf.scene)
+        // Assuming the loaded model is a group
+        const group = gltf.scene;
+
+        // Traverse the group and apply the material to each mesh
+        group.traverse((child) => {
+            if (child.isMesh) {
+                const material = new THREE.MeshStandardMaterial({
+                  transparent: true,
+                  opacity: 0.1,  // Adjust the opacity as needed
+                  roughness: 0.1,  // Adjust the roughness for a smoother or rougher appearance
+                  metalness: 0.7,  // Adjust the metalness for reflections
+                  color: new THREE.Color(0x000000),  // Adjust the color as needed
+                  envMapIntensity: 1.0,  // Adjust the intensity of environment map reflections
+                  refractionRatio: 0.1,  // Adjust the refraction ratio for a
+                });
+                material.side = THREE.DoubleSide;
+                child.material = material;
+            }
+        });
+
+        scene.add(group);
     },
     (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
     },
     (error) => {
-        console.log(error)
+        console.log(error);
     }
-)
+);
+
+// Add a text element behind the glass model
+const textElement = document.createElement('div');
+        textElement.className = 'behind';
+        textElement.textContent = 'Hello, Three.js!';
+        document.body.appendChild(textElement);
+
+
+ // 0 as the second parameter makes the background fully transparent
+
 
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
@@ -96,12 +130,20 @@ animate()
   </script>
 
   <style>
-  body{
-    background-color: black;
-  }
   #canvas3d{
     background-color: black;
     width: 50vw;
     height: 50vh;
   }
+
+  .behind {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            z-index: -1; /* Set a value lower than 0 to ensure it's rendered behind the canvas */
+        }
   </style>
