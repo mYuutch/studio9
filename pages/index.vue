@@ -47,11 +47,12 @@ scene.add( alight );
 
 
 //RENDERER
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
-renderer.setClearColor(0x000000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false})
+renderer.setClearColor(0x000000,1);
 renderer.shadowMap.enabled = true
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
+renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
@@ -60,7 +61,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 
 
-camera.position.z = 5
+camera.position.z = 100
+camera.position.y = 2
 
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -83,29 +85,28 @@ const pivotGroup = new THREE.Group();
     '/studio9_2.glb',
     function (gltf) {
          group = gltf.scene;
-         const gradientTexture = new THREE.TextureLoader().load('/glassSheen.jpg');
+
+
         group.traverse((child) => {
             if (child.isMesh) {
 
               const hdrEquirect = new RGBELoader().load(
-                "/empty_warehouse_01_4k.hdr",  
+                "/empty_warehouse_01_1k.hdr",  
                 () => { 
                   hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
                 }
               );
                 const material = new THREE.MeshPhysicalMaterial({
                   transmission: 0.99,
-                  sheen: 0,
-                  specularIntensity: 0,
                   thickness: 150,
-                  clearcoat: 1,
-                  roughness: 0.1, 
-                  reflectivity: 0.3,
-                  iridescence : 0.1,
-                  iridescenceIOR : 1.1,
-                  envMapIntensity: 0.7,
+                  clearcoat: 0.8,
+                  clearcoatRoughness: 0.3,
+                  roughness: 0.1,
+                  reflectivity: 0.9,
+                  iridescence : 0.3,
+                  iridescenceIOR : 1.5,
+                  envMapIntensity: 0.1,
                   ior: 2.3,
-                  sheenColorMap: gradientTexture,
                   side: THREE.DoubleSide,
                   envMap: hdrEquirect
                 });
@@ -113,8 +114,8 @@ const pivotGroup = new THREE.Group();
                 
                 child.material = material;
 
-                pivotGroup.position.z = 1
-                pivotGroup.position.x = 1
+                pivotGroup.position.z = 0
+                pivotGroup.position.x = 0
                 pivotGroup.add(group)
             }
         });
@@ -135,6 +136,7 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
+    
     render()
 }
 
