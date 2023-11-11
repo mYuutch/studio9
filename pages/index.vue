@@ -22,7 +22,7 @@ import Stats from 'three/examples/jsm/libs/stats.module'
     mounted() {
       if (process.client){
 
-        let group;
+        
 // INIT SCENE
 const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
@@ -37,27 +37,28 @@ scene.add(ambientLight);
 
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
-    70,
+    75,
     window.innerWidth / window.innerHeight,
-    0.1,
-    1000
+    1.5,
+    500
 )
 
 
 
 //RENDERER
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
-renderer.setClearColor(0x000000);
+renderer.setClearColor(0x000000, 0);
 renderer.shadowMap.enabled = true
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 //CONTROLS
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.enableDamping = true
+const controls = new OrbitControls(camera, renderer.domElement);
 
 
 
+camera.position.z = -5
+/*
      // Create an HTML element
      const textElement = document.createElement('div');
       textElement.textContent = 'Hello, Three.js!';
@@ -86,42 +87,42 @@ controls.enableDamping = true
       plane.position.z = -5
       plane.position.y = -0.33
       scene.add(plane);
+*/
 
+let group;
+const pivotGroup = new THREE.Group();
 
 //CHARGEMENT MODEL EXTERNE
   const loader = new GLTFLoader()
   loader.load(
-    '/cube.glb',
+    '/studio9_2.glb',
     function (gltf) {
          group = gltf.scene;
          const gradientTexture = new THREE.TextureLoader().load('/glassSheen.jpg');
         group.traverse((child) => {
             if (child.isMesh) {
                 const material = new THREE.MeshPhysicalMaterial({
-                  transmission: 0.99,
-                  sheen: 0.9,
+                  transmission: 0.9,
+                  sheen: 0,
                   specularIntensity: 0.9,
-                  thickness: 0.8,
+                  thickness: 1.8,
                   clearcoat: 0.9,
-                  roughness: 0.1, 
-                  reflectivity: 2.3,  
+                  roughness: 0, 
+                  reflectivity: 0.8,  
                   envMapIntensity: 1.0, 
                   ior: 1.15,
                   iridescence: 0.8,
-                 color: new THREE.Color(0xFFFFFF),
-                  sheenColor: new THREE.Color(0x2E2E2E),
+                 /*color: new THREE.Color(0xD160E3),*/
+                  sheenColor: new THREE.Color(0xD160E3),
                   sheenColorMap: gradientTexture
                 });
                 material.side = THREE.DoubleSide;
                 child.material = material;
+                group.position.set(-15,0,-15)
+                pivotGroup.add(group)
             }
         });
-
-        group.scale.x = 1
-        group.scale.y = 0.6
-        group.scale.z  
-        group.position.x = 0
-        scene.add(group);
+        scene.add(pivotGroup);
     },
     (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
@@ -148,21 +149,13 @@ document.body.appendChild(stats.dom)
 
 //ANIMATE
 function animate() {
+  if (group) {
+
+    group.rotation.y +=0.005
+  }
     requestAnimationFrame(animate)
-    if(group){
-      
-      if(group.position.x < -1){
-        group.position.x = 0.5
-      }
-      group.position.x -= 0.001
-
- 
-    }
-
     controls.update()
-
     render()
-
     stats.update()
 }
 
