@@ -12,71 +12,115 @@
   <script>
 
   /* import { Application } from '@splinetool/runtime'; */
-  import * as THREE from 'three'
+import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import Stats from 'three/examples/jsm/libs/stats.module'
 
 
-
   export default {
     mounted() {
       if (process.client){
+
+        let group;
+// INIT SCENE
 const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
 
+//LIGHTS
 const light = new THREE.SpotLight()
 light.position.set(5, 5, 5)
 scene.add(light)
 
-const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+const ambientLight = new THREE.AmbientLight(0xffffff); // Soft white light
 scene.add(ambientLight);
 
-
+//CAMERA
 const camera = new THREE.PerspectiveCamera(
-    75,
+    70,
     window.innerWidth / window.innerHeight,
     0.1,
     1000
 )
-camera.position.z = 2
 
-/*const renderer = new THREE.WebGLRenderer({ alpha: true });
-renderer.setClearColor(0x000000, 0); // 0 as the second parameter makes the background fully transparent*/
 
-const renderer = new THREE.WebGLRenderer({ alpha: true})
-renderer.setClearColor(0x000000, 0);
+
+//RENDERER
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
+renderer.setClearColor(0x000000);
 renderer.shadowMap.enabled = true
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
+//CONTROLS
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 
+
+
+     // Create an HTML element
+     const textElement = document.createElement('div');
+      textElement.textContent = 'Hello, Three.js!';
+      textElement.style.color = 'red';
+      textElement.style.fontFamily = 'Arial, sans-serif';
+      textElement.style.fontSize = '100000px';
+
+      // Create a CanvasTexture from the HTML element
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = 500; // Set the width of the canvas (adjust as needed)
+      canvas.height = 500
+            ; // Set the height of the canvas (adjust as needed)
+      context.fillStyle = '';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.font = '5rem Arial, sans-serif';
+      context.fillStyle = 'white';
+      context.fillText('Studio 9', 50, 100);
+
+      const texture = new THREE.CanvasTexture(canvas);
+
+      // Create a plane with the HTML element texture
+      const planeGeometry = new THREE.PlaneGeometry(5, 4, 8);
+      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
+      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.position.z = -5
+      plane.position.y = -0.33
+      scene.add(plane);
+
+
+//CHARGEMENT MODEL EXTERNE
   const loader = new GLTFLoader()
   loader.load(
     '/cube.glb',
     function (gltf) {
-        // Assuming the loaded model is a group
-        const group = gltf.scene;
-
-        // Traverse the group and apply the material to each mesh
+         group = gltf.scene;
+         const gradientTexture = new THREE.TextureLoader().load('/glassSheen.jpg');
         group.traverse((child) => {
             if (child.isMesh) {
-                const material = new THREE.MeshStandardMaterial({
-                  transparent: true,
-                  opacity: 0.1,  // Adjust the opacity as needed
-                  roughness: 0.1,  // Adjust the roughness for a smoother or rougher appearance
-                  metalness: 0.7,  // Adjust the metalness for reflections
-                  color: new THREE.Color(0x000000),  // Adjust the color as needed
-                  envMapIntensity: 1.0,  // Adjust the intensity of environment map reflections
-                  refractionRatio: 0.1,  // Adjust the refraction ratio for a
+                const material = new THREE.MeshPhysicalMaterial({
+                  transmission: 0.99,
+                  sheen: 0.9,
+                  specularIntensity: 0.9,
+                  thickness: 0.8,
+                  clearcoat: 0.9,
+                  roughness: 0.1, 
+                  reflectivity: 2.3,  
+                  envMapIntensity: 1.0, 
+                  ior: 1.15,
+                  iridescence: 0.8,
+                 color: new THREE.Color(0xFFFFFF),
+                  sheenColor: new THREE.Color(0x2E2E2E),
+                  sheenColorMap: gradientTexture
                 });
                 material.side = THREE.DoubleSide;
                 child.material = material;
             }
         });
 
+        group.scale.x = 1
+        group.scale.y = 0.6
+        group.scale.z  
+        group.position.x = 0
         scene.add(group);
     },
     (xhr) => {
@@ -87,16 +131,8 @@ controls.enableDamping = true
     }
 );
 
-// Add a text element behind the glass model
-const textElement = document.createElement('div');
-        textElement.className = 'behind';
-        textElement.textContent = 'Hello, Three.js!';
-        document.body.appendChild(textElement);
 
-
- // 0 as the second parameter makes the background fully transparent
-
-
+// HANDLE RESIZE
 window.addEventListener('resize', onWindowResize, false)
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight
@@ -105,11 +141,23 @@ function onWindowResize() {
     render()
 }
 
+//STATS FPS
 const stats = new Stats()
 document.body.appendChild(stats.dom)
 
+
+//ANIMATE
 function animate() {
     requestAnimationFrame(animate)
+    if(group){
+      
+      if(group.position.x < -1){
+        group.position.x = 0.5
+      }
+      group.position.x -= 0.001
+
+ 
+    }
 
     controls.update()
 
@@ -118,6 +166,7 @@ function animate() {
     stats.update()
 }
 
+//RENDER
 function render() {
     renderer.render(scene, camera)
 }
@@ -135,15 +184,4 @@ animate()
     width: 50vw;
     height: 50vh;
   }
-
-  .behind {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: red;
-            font-family: Arial, sans-serif;
-            font-size: 24px;
-            z-index: -1; /* Set a value lower than 0 to ensure it's rendered behind the canvas */
-        }
   </style>
