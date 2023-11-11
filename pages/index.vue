@@ -15,8 +15,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'; // Ensure the correct path to RGBELoader
 import Stats from 'three/examples/jsm/libs/stats.module'
-
 
   export default {
     mounted() {
@@ -26,20 +26,6 @@ import Stats from 'three/examples/jsm/libs/stats.module'
 // INIT SCENE
 const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
-
-//LIGHTS
-const light1 = new THREE.SpotLight()
-light1.position.set(0, 0, 10)
-scene.add(light1)
-
-const light2 = new THREE.SpotLight()
-light1.position.set(0, 0, -5)
-scene.add(light2)
-
-const light3 = new THREE.SpotLight()
-light1.position.set(-3, 0, 5)
-scene.add(light3)
-
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
     75,
@@ -47,13 +33,25 @@ const camera = new THREE.PerspectiveCamera(
     0.1,
     500
 )
+//LIGHTS
+const light1 = new THREE.SpotLight()
+light1.position.copy(camera.position);
+light1.intensity = 5.0
+light1.angle = Math.PI / 5;
+scene.add(light1)
+
+const alight = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( alight );
+
 
 
 
 //RENDERER
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
-renderer.setClearColor(0x000000, 0);
+renderer.setClearColor(0x000000);
 renderer.shadowMap.enabled = true
+renderer.gammaInput = true;
+renderer.gammaOutput = true;
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
@@ -67,38 +65,14 @@ camera.position.z = 5
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
+cube.scale.z = 20
+cube.scale.x = 20
+cube.scale.y = 20
 
+cube.position.z = -40
+cube.position.y = 15
 // Add the cube to the scene
 scene.add(cube);
-
-/*
-     // Create an HTML element
-     const textElement = document.createElement('div');
-      textElement.textContent ="Créateurs d'éxperiences innovantes";
-      textElement.style.color = 'red';
-      textElement.style.fontFamily = 'Arial, sans-serif';
-      textElement.style.fontSize = '100000px';
-
-      // Create a CanvasTexture from the HTML element
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      canvas.width = 500; // Set the width of the canvas (adjust as needed)
-      canvas.height = 500
-            ; // Set the height of the canvas (adjust as needed)
-      context.fillStyle = '';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.font = '5rem Arial, sans-serif';
-      context.fillStyle = 'white';
-      context.fillText("Créateurs d'éxperiences innovantes", 50, 100);
-
-      const texture = new THREE.CanvasTexture(canvas);
-
-      // Create a plane with the HTML element texture
-      const planeGeometry = new THREE.PlaneGeometry(5, 4, 8);
-      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-      scene.add(plane);
-*/
 
 let group;
 const pivotGroup = new THREE.Group();
@@ -112,26 +86,32 @@ const pivotGroup = new THREE.Group();
          const gradientTexture = new THREE.TextureLoader().load('/glassSheen.jpg');
         group.traverse((child) => {
             if (child.isMesh) {
+
+              const hdrEquirect = new RGBELoader().load(
+                "/empty_warehouse_01_4k.hdr",  
+                () => { 
+                  hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
+                }
+              );
                 const material = new THREE.MeshPhysicalMaterial({
-                  transmission: 0.95,
-                  sheen: 0.9,
-                  specularIntensity: 0.9,
-                  thickness: 1.3,
-                  clearcoat: 0.9,
-                  roughness: 0, 
-                  reflectivity: 0.8,  
-                  ior: 1.15,
-                  color: new THREE.Color(0xFFFFFF),
-                  sheenColor: new THREE.Color(0xD160E3),
+                  transmission: 0.99,
+                  sheen: 0,
+                  specularIntensity: 0,
+                  thickness: 150,
+                  clearcoat: 1,
+                  roughness: 0.1, 
+                  reflectivity: 0.3,
+                  iridescence : 0.1,
+                  iridescenceIOR : 1.1,
+                  envMapIntensity: 0.7,
+                  ior: 2.3,
                   sheenColorMap: gradientTexture,
-                  side: THREE.DoubleSide
+                  side: THREE.DoubleSide,
+                  envMap: hdrEquirect
                 });
 
                 
                 child.material = material;
-                group.scale.x = 0.05
-                group.scale.y = 0.05
-                group.scale.z = 0.05
 
                 pivotGroup.position.z = 1
                 pivotGroup.position.x = 1
@@ -147,7 +127,7 @@ const pivotGroup = new THREE.Group();
         console.log(error);
     }
 );
-
+          
 
 // HANDLE RESIZE
 window.addEventListener('resize', onWindowResize, false)
@@ -165,10 +145,6 @@ document.body.appendChild(stats.dom)
 
 //ANIMATE
 function animate() {
-  /*if (group) {
-
-    group.rotation.y +=0.005
-  }*/
     requestAnimationFrame(animate)
     controls.update()
     render()
