@@ -28,18 +28,23 @@ const scene = new THREE.Scene()
 scene.add(new THREE.AxesHelper(5))
 
 //LIGHTS
-const light = new THREE.SpotLight()
-light.position.set(5, 5, 5)
-scene.add(light)
+const light1 = new THREE.SpotLight()
+light1.position.set(0, 0, 10)
+scene.add(light1)
 
-const ambientLight = new THREE.AmbientLight(0xffffff); // Soft white light
-scene.add(ambientLight);
+const light2 = new THREE.SpotLight()
+light1.position.set(0, 0, -5)
+scene.add(light2)
+
+const light3 = new THREE.SpotLight()
+light1.position.set(-3, 0, 5)
+scene.add(light3)
 
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
-    1.5,
+    0.1,
     500
 )
 
@@ -57,11 +62,19 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 
 
-camera.position.z = -5
+camera.position.z = 5
+
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+
+// Add the cube to the scene
+scene.add(cube);
+
 /*
      // Create an HTML element
      const textElement = document.createElement('div');
-      textElement.textContent = 'Hello, Three.js!';
+      textElement.textContent ="Créateurs d'éxperiences innovantes";
       textElement.style.color = 'red';
       textElement.style.fontFamily = 'Arial, sans-serif';
       textElement.style.fontSize = '100000px';
@@ -76,16 +89,14 @@ camera.position.z = -5
       context.fillRect(0, 0, canvas.width, canvas.height);
       context.font = '5rem Arial, sans-serif';
       context.fillStyle = 'white';
-      context.fillText('Studio 9', 50, 100);
+      context.fillText("Créateurs d'éxperiences innovantes", 50, 100);
 
       const texture = new THREE.CanvasTexture(canvas);
 
       // Create a plane with the HTML element texture
       const planeGeometry = new THREE.PlaneGeometry(5, 4, 8);
-      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
+      const planeMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
       const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-      plane.position.z = -5
-      plane.position.y = -0.33
       scene.add(plane);
 */
 
@@ -102,23 +113,28 @@ const pivotGroup = new THREE.Group();
         group.traverse((child) => {
             if (child.isMesh) {
                 const material = new THREE.MeshPhysicalMaterial({
-                  transmission: 0.9,
-                  sheen: 0,
+                  transmission: 0.95,
+                  sheen: 0.9,
                   specularIntensity: 0.9,
-                  thickness: 1.8,
+                  thickness: 1.3,
                   clearcoat: 0.9,
                   roughness: 0, 
                   reflectivity: 0.8,  
-                  envMapIntensity: 1.0, 
                   ior: 1.15,
-                  iridescence: 0.8,
-                 /*color: new THREE.Color(0xD160E3),*/
+                  color: new THREE.Color(0xFFFFFF),
                   sheenColor: new THREE.Color(0xD160E3),
-                  sheenColorMap: gradientTexture
+                  sheenColorMap: gradientTexture,
+                  side: THREE.DoubleSide
                 });
-                material.side = THREE.DoubleSide;
+
+                
                 child.material = material;
-                group.position.set(-15,0,-15)
+                group.scale.x = 0.05
+                group.scale.y = 0.05
+                group.scale.z = 0.05
+
+                pivotGroup.position.z = 1
+                pivotGroup.position.x = 1
                 pivotGroup.add(group)
             }
         });
@@ -149,10 +165,10 @@ document.body.appendChild(stats.dom)
 
 //ANIMATE
 function animate() {
-  if (group) {
+  /*if (group) {
 
     group.rotation.y +=0.005
-  }
+  }*/
     requestAnimationFrame(animate)
     controls.update()
     render()
