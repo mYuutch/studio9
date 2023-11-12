@@ -1,13 +1,11 @@
-// nuxt.config.js
-
-export default {
-  // ... other Nuxt.js configurations
-
-  build: {
-    extend(config, { isDev, isClient }) {
-      if (isClient) {
-        config.resolve.alias['three'] = 'three';
-      }
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  css: ['~/assets/css/main.css'],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
     },
   },
-};
+})

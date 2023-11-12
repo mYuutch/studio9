@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <nav class="bg-red-500 container flex w-full mx-auto items-center">
         <a href="">Studio 9</a>
         <a href="">L'agence</a>
         <a href="">Nos valeurs</a>
@@ -24,12 +24,7 @@ nav a:first-child{
     font-weight:600;
     font-size: 1.3rem;
 }
-nav{
-    display: flex;
-    background-color: black;
-    justify-content: flex-end;
-    width: 90%;
-    margin: auto;
-    margin-top: 30px;
-}
+
+
+
 </style>
