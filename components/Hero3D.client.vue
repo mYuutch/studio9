@@ -17,7 +17,7 @@
   /*scene.add(new THREE.AxesHelper(5))*/
   //CAMERA
   const camera = new THREE.PerspectiveCamera(
-      60,
+      75,
       window.innerWidth / window.innerHeight,
       0.1,
       500
