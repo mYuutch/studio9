@@ -28,13 +28,13 @@
 
   //LIGHTS
 
-  /*
+  
   const light1 = new THREE.SpotLight()
   light1.position.copy(camera.position);
   light1.intensity = 100.0
   light1.angle = Math.PI / 5;
   scene.add(light1)
-  */
+  
 
   const alight = new THREE.AmbientLight( 0x404040 ); // soft white light
   scene.add( alight );
@@ -52,6 +52,17 @@
 
   //CONTROLS
   const controls = new OrbitControls(camera, renderer.domElement);
+
+
+  //MOUSE POS
+
+  let mouseX = 0, mouseY = 0;
+
+document.addEventListener('mousemove', function(event) {
+  mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+  mouseY = - (event.clientY / window.innerHeight) * 2 + 1;
+}, false);
+
 
   /*
   // TEST CUBE
@@ -88,11 +99,11 @@
                   const material = new THREE.MeshPhysicalMaterial({
                     transmission: 1,
                     thickness: 200,
-                    clearcoat: 0.1,
+                    clearcoat: 0.5,
                     metalness:0,
                     clearcoatRoughness: 0,
                     roughness: 0,
-                    reflectivity: 0.4,
+                    reflectivity: 1,
                     iridescence : 0.1,
                     iridescenceIOR : 1,
                     envMapIntensity: 0.8,
@@ -151,8 +162,14 @@
     if(group){
 
 
-        pivot.rotation.y += 0.005;
-        pivot.position.set(-5, 0, -50);
+        /*pivot.rotation.y += 0.005;
+        pivot.position.set(-5, 0, -50);*/
+
+        group.rotation.x = mouseY * -0.1;
+        group.rotation.y = mouseX * 0.1;
+
+       
+
 
       
     }
