@@ -20,17 +20,20 @@
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      500
+      1000
   )
 
-  camera.position.z = 75
-  camera.position.y = 20
+  camera.position.z = 40
+  camera.position.y = 0
+  camera.rotation.set(0,0,0)
 
   //LIGHTS
 
   
   const light1 = new THREE.SpotLight()
-  light1.position.copy(camera.position);
+  /*light1.position.copy(camera.position);*/
+  light1.position.set(60,0,20)
+  light1.rotation.set(0,700,0)
   light1.intensity = 100.0
   light1.angle = Math.PI / 5;
   scene.add(light1)
@@ -44,9 +47,7 @@
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
   renderer.setClearColor(0x000000,1);
   renderer.shadowMap.enabled = true
-  renderer.gammaInput = true;
-  renderer.gammaOutput = true;
-  renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
+  renderer.setPixelRatio( window.devicePixelRatio * 0.8 );
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.body.appendChild(renderer.domElement)
 
@@ -55,27 +56,12 @@
 
 
   //MOUSE POS
-
-  let mouseX = 0, mouseY = 0;
-
+let mouseX = 0, mouseY = 0;
 document.addEventListener('mousemove', function(event) {
   mouseX = (event.clientX / window.innerWidth) * 2 - 1;
   mouseY = - (event.clientY / window.innerHeight) * 2 + 1;
 }, false);
 
-
-  /*
-  // TEST CUBE
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
-  cube.scale.z = 20
-  cube.scale.x = 20
-  cube.scale.y = 20
-  cube.position.z = -40
-  cube.position.y = 15
-  scene.add(cube);
-  */
 
   //CHARGEMENT MODEL EXTERNE
   let group
@@ -91,7 +77,7 @@ document.addEventListener('mousemove', function(event) {
               if (child.isMesh) {
 
                 const hdrEquirect = new RGBELoader().load(
-                  "/kloofendal_48d_partly_cloudy_puresky_1k.hdr",  
+                  "/empty_warehouse_01_1k.hdr",  
                   () => { 
                     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
                   }
@@ -99,14 +85,12 @@ document.addEventListener('mousemove', function(event) {
                   const material = new THREE.MeshPhysicalMaterial({
                     transmission: 1,
                     thickness: 200,
-                    clearcoat: 0.5,
-                    metalness:0,
+                    clearcoat: 0,
+                    metalness:0.1,
                     clearcoatRoughness: 0,
                     roughness: 0,
-                    reflectivity: 1,
-                    iridescence : 0.1,
-                    iridescenceIOR : 1,
-                    envMapIntensity: 0.8,
+                    reflectivity: 0.5,
+                    envMapIntensity: 0.4,
                     ior: 2.3,
                     side: THREE.DoubleSide,
                     envMap: hdrEquirect
@@ -130,6 +114,7 @@ document.addEventListener('mousemove', function(event) {
 
           group.rotation.order = 'XYZ';
           group.rotation.set(0, 0, 0);
+          pivot.rotation.set(0,0,0);
 
           
       },
@@ -161,16 +146,8 @@ document.addEventListener('mousemove', function(event) {
   function animate() {
     if(group){
 
-
-        /*pivot.rotation.y += 0.005;
-        pivot.position.set(-5, 0, -50);*/
-
-        group.rotation.x = mouseY * -0.1;
-        group.rotation.y = mouseX * 0.1;
-
-       
-
-
+        group.rotation.x = mouseY * -0.05;
+        group.rotation.y = mouseX * 0.05;
       
     }
       requestAnimationFrame(animate)
