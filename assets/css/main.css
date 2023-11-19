@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Gotham";
+    src: url('assets/Gotham/Gotham-Bold.otf') format('opentype');
+}
+
+@font-face {
+    font-family: "Istok";
+    src: url('assets/Istok/IstokWeb-Regular.ttf') format('truetype');
+}
+
+html {
+    font-family: "Gotham";
+}

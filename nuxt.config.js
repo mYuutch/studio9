@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  buildModules: ['@nuxt/content'],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   postcss: {
@@ -8,4 +9,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  content: {
+    dir: 'assets',
+  },  
 })
