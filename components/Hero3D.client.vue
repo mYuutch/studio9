@@ -1,5 +1,7 @@
   <template>
-
+<div class="container bg-black my-24 flex w-full mx-auto items-center justify-center px-24 py-16">
+        <h1 class="text-8xl text-white w-2/5 uppercase">Ensemble, vers de <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">nouveaux horizons créatifs</span></h1>
+    </div>
   </template>
 
   <script>
@@ -47,7 +49,7 @@
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
   renderer.setClearColor(0x000000,1);
   renderer.shadowMap.enabled = true
-  renderer.setPixelRatio( window.devicePixelRatio * 0.8 );
+  renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
   renderer.setSize(window.innerWidth, window.innerHeight)
   document.body.appendChild(renderer.domElement)
 
