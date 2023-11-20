@@ -80,7 +80,7 @@ light.decay = 0.45
               if (child.isMesh) {
 
                 const hdrEquirect = new RGBELoader().load(
-                  "/empty_warehouse_01_1k.hdr",  
+                  "/kloofendal_43d_clear_puresky_1k.hdr",  
                   () => { 
                     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
                   }
@@ -90,10 +90,10 @@ light.decay = 0.45
                     thickness: 200,
                     clearcoat: 1.7,
                     metalness:0.2,
-                    clearcoatRoughness: 0.3,
+                    clearcoatRoughness: 0.1,
                     roughness: 0,
                     reflectivity: 0.9,
-                    envMapIntensity: 0.2,
+                    envMapIntensity: 0.4,
                     ior: 2.3,
                     side: THREE.DoubleSide,
                     envMap: hdrEquirect
