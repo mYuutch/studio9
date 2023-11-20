@@ -1,6 +1,6 @@
   <template>
     <div id="baseline" class=" absolute z-[-1] container box-border bg-black my-24 flex mx-auto items-center justify-center px-24 py-24">
-        <h1 class="text-8xl text-white uppercase">Ensemble, vers de <span class="bg-clip-text bg-gradient-to-r from-blue-700 to-slate-800">nouveaux horizons créatifs</span></h1>
+        <h1 class="text-8xl text-white uppercase">Ensemble, vers de nouveaux horizons créatifs </h1>
     </div>
   </template>
 
@@ -184,9 +184,9 @@ light.decay = 0.45
     </script>
 
 <style>
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    color: transparent;
+  }
   
-.bg-clip-text {
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
 </style>
