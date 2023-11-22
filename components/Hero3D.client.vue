@@ -80,17 +80,17 @@ light.decay = 0.45
 
                 
                 const hdrEquirect = new RGBELoader().load(
-                  "/kloppenheim_02_1k.hdr",  
+                  "/mpumalanga_veld_puresky_1k.hdr",  
                   () => { 
                     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
                     
                   }
                 );
                   const material = new THREE.MeshPhysicalMaterial({
-                    transmission: 2,
+                    transmission: 1.5,
                     thickness: 200,
                     clearcoat: 0,
-                    metalness:0.7,
+                    metalness:.8,
                     clearcoatRoughness: 0.7,
                     roughness: 0,
                     reflectivity: 0,
