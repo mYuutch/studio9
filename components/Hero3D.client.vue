@@ -22,7 +22,7 @@
       1000
   )
   camera.position.z = 50
-  camera.position.y = 0
+  camera.position.y = 10
   camera.rotation.set(0,0,0)
 
   //LIGHTS
@@ -46,7 +46,7 @@ light.decay = 0.45
 
   //RENDERERS
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
-  renderer.setClearColor(0x00000,0);
+  renderer.setClearColor(0x000000,0);
   renderer.shadowMap.enabled = true
   renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -78,31 +78,32 @@ light.decay = 0.45
           group.traverse((child) => {
               if (child.isMesh) {
 
+                
                 const hdrEquirect = new RGBELoader().load(
-                  "/empty_warehouse_01_1k.hdr",  
+                  "/kloppenheim_02_1k.hdr",  
                   () => { 
-                    hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
+                    hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
+                    
                   }
                 );
                   const material = new THREE.MeshPhysicalMaterial({
-                    transmission: 1,
+                    transmission: 2,
                     thickness: 200,
-                    clearcoat: 1.7,
+                    clearcoat: 0,
                     metalness:0.7,
-                    clearcoatRoughness: 0.1,
+                    clearcoatRoughness: 0.7,
                     roughness: 0,
-                    reflectivity: 0.9,
-                    envMapIntensity: 0.1,
+                    reflectivity: 0,
+                    envMapIntensity: 0.5,
                     ior: 2.3,
                     side: THREE.DoubleSide,
                     envMap: hdrEquirect,
-                    color: new THREE.Color('0x0a0a0a')
                   });
                   child.material = material;
               }
           });
 
-      
+          group.scale.set(1.1,1.1,1.1)
           pivot.add(group); // Add the group to the pivot
           scene.add(pivot); // Add the pivot to the scene
         
@@ -125,7 +126,7 @@ light.decay = 0.45
 }, 1000);
 
   */       
-          pivot.position.set(0,15,0)
+          pivot.position.set(0,22,0)
 
           const box = new THREE.Box3().setFromObject(group);
           const center = box.getCenter(new THREE.Vector3());
