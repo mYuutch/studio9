@@ -10,6 +10,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'body': ['Istok'],
+      'display': ['Gotham']
+    }
   },
   plugins: [],
 }

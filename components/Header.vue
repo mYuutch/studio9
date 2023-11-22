@@ -1,30 +1,13 @@
 <template>
-    <nav class="bg-red-500 container flex w-full mx-auto items-center">
-        <a href="">Studio 9</a>
+    <nav class="flex px-2 font-body text-neutral-300 w-full mx-auto items-center mt-4">
+        <a class="font-display text-neutral-100 text-xl grow">Studio 9</a>
+        <div id="links" class="inline-flex gap-4">
         <a href="">L'agence</a>
         <a href="">Nos valeurs</a>
         <a href="">Contactez-nous</a>
+    </div>
     </nav>
 </template>
 <style>
-nav a{
-    text-decoration: none;
-    color: white;
-    font-family: sans-serif;
-    margin-left: 50px;
-    font-size: 1.2rem;
-}
-
-nav a:hover{
-    text-decoration: underline;
-}
-
-nav a:first-child{
-    flex-grow: 1;
-    font-weight:600;
-    font-size: 1.3rem;
-}
-
-
-
+body{}
 </style>

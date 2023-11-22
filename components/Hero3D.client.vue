@@ -1,7 +1,6 @@
   <template>
-    <div id="baseline" class=" absolute z-[-1] container box-border bg-neutral-950 my-24 flex mx-auto items-center justify-center px-24 py-24">
-        <h1 class="text-8xl text-white uppercase">Ensemble, vers de nouveaux horizons créatifs </h1>
-    </div>
+    <div id="scene-container"></div>
+
   </template>
 
   <script>
@@ -157,10 +156,11 @@ light.decay = 0.45
       render()
   }
 
+  /*
   //STATS FPS
   const stats = new Stats()
   document.body.appendChild(stats.dom)
-
+*/
 
   //ANIMATE
   function animate() {
@@ -173,7 +173,7 @@ light.decay = 0.45
       requestAnimationFrame(animate)
       /*controls.update()*/
       render()
-      stats.update()
+      /*stats.update()*/
   }
 
   //RENDER
