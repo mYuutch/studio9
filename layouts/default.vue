@@ -1,9 +1,7 @@
 <template>
 
-    <div class="wrapper">
-    </div>
-        <slot/>
-    
+  
+    <slot/> 
   
 </template>
 
@@ -15,6 +13,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
+}
+
+body{
+  background-color: #0a0a0a;
 }
 
 </style>

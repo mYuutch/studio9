@@ -1,5 +1,5 @@
   <template>
-    <div id="baseline" class=" absolute z-[-1] container box-border bg-black my-24 flex mx-auto items-center justify-center px-24 py-24">
+    <div id="baseline" class=" absolute z-[-1] container box-border bg-neutral-950 my-24 flex mx-auto items-center justify-center px-24 py-24">
         <h1 class="text-8xl text-white uppercase">Ensemble, vers de nouveaux horizons créatifs </h1>
     </div>
   </template>
@@ -47,7 +47,7 @@ light.decay = 0.45
 
   //RENDERERS
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
-  renderer.setClearColor(0x000000,1);
+  renderer.setClearColor(0x00000,0);
   renderer.shadowMap.enabled = true
   renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
   renderer.setSize(window.innerWidth, window.innerHeight)
@@ -80,23 +80,24 @@ light.decay = 0.45
               if (child.isMesh) {
 
                 const hdrEquirect = new RGBELoader().load(
-                  "/kloofendal_43d_clear_puresky_1k.hdr",  
+                  "/empty_warehouse_01_1k.hdr",  
                   () => { 
                     hdrEquirect.mapping = THREE.EquirectangularReflectionMapping; 
                   }
                 );
                   const material = new THREE.MeshPhysicalMaterial({
-                    transmission: 0.99,
+                    transmission: 1,
                     thickness: 200,
                     clearcoat: 1.7,
-                    metalness:0.2,
+                    metalness:0.7,
                     clearcoatRoughness: 0.1,
                     roughness: 0,
                     reflectivity: 0.9,
-                    envMapIntensity: 0.4,
+                    envMapIntensity: 0.1,
                     ior: 2.3,
                     side: THREE.DoubleSide,
-                    envMap: hdrEquirect
+                    envMap: hdrEquirect,
+                    color: new THREE.Color('0x0a0a0a')
                   });
                   child.material = material;
               }
@@ -106,6 +107,7 @@ light.decay = 0.45
           pivot.add(group); // Add the group to the pivot
           scene.add(pivot); // Add the pivot to the scene
         
+          /*
 
           setTimeout(() => {
   htmlToImage.toCanvas(document.getElementById('baseline'), { quality: 1 })
@@ -123,7 +125,7 @@ light.decay = 0.45
     });
 }, 1000);
 
-         
+  */       
           pivot.position.set(0,15,0)
 
           const box = new THREE.Box3().setFromObject(group);
