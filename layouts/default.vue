@@ -21,9 +21,5 @@ body{
   overflow-x: hidden;
 }
 
-canvas{
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
+
 </style>

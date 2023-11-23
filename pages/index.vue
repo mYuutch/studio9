@@ -59,58 +59,155 @@
         <div 
         class="
         col-span-3
-        text-neutral-400
+        text-neutral-300
         text-2xl
         pb-56
         ">
-        ( Notre histoire )
+        ( Notre histoire )  
         </div>
         
         <div 
         class="
-        col-span-5
+        col-span-9
         ">
-
-            <div>
-                <h1>Début de l'aventure</h1>
-            </div>
-
-            <div>
-                <h1>Spécialisation et Focus</h1>
-            </div>
-            <div>
-                <h1>Pofessionalisation</h1>
-            </div>
-            <div>
-                <h1>Évolution et Lancement</h1>
-            </div>
+        <Timeline/>
         </div>
 
         <div 
         class="
+        pb-24
         col-span-4
-        inline-flex
-        text-center
-        justify-center
-        text-5xl
-        
+        text-4xl
         ">
-        <ul class="flex flex-col gap-4">
-            <li>2021</li>
-            <li>2022</li>
-            <li>2023</li>
-            <li>2023-2024</li>
-        </ul>
+        ( 02 )
         </div>
-        <div class="bg-neutral-300">08</div>
-        <div class="bg-neutral-300">09</div>
-        <div class="bg-neutral-300">10</div>
-        <div class="bg-neutral-300">11</div>
-        <div class="bg-neutral-300">12</div>
-        <div class="bg-neutral-300">12</div>
-        <div class="bg-neutral-300">12</div>
-        <div class="bg-neutral-300">12</div>
-        <div class="bg-neutral-300">12</div>
+
+        <div 
+        class="
+        pb-24
+        col-span-8
+        text-5xl
+        text-neutral-300
+        flex
+        justify-end
+        ">
+        Explorez nos services : Votre vision, notre créativité, une collaboration innovante pour façonner votre succès numérique
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        
+        <SiteVitrine3D/>
+        <h1 class="text-4xl text-center">Site Vitrine </h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Créez une présence en ligne captivante avec un site présentant de manière attrayante les informations clés de votre entreprise.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <ECommerce3D/>
+        <h1 class="text-4xl text-center">Site E-Commerce</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Établissez une plateforme de vente en ligne sécurisée et conviviale pour promouvoir et vendre vos produits ou services.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <DeveloppementWeb3d/>
+        <h1 class="text-4xl text-center">Développement Web</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Concevez des solutions web sur mesure pour optimiser la gestion interne, externe et les applications spécifiques.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <ApplicationMobile3D/>
+        <h1 class="text-4xl text-center">Application Mobile</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Développez des applications mobiles intuitives, offrant une expérience utilisateur optimale sur les appareils iOS et Android.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <Referencement3D/>
+        <h1 class="text-4xl text-center">Réferencement</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Optimisez votre visibilité sur les moteurs de recherche pour attirer un trafic qualifié vers votre site web et renforcer votre positionnement en ligne.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <MarketingDigital3D/>
+        <h1 class="text-4xl text-center">Marketing Digital</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Boostez votre visibilité en ligne avec des stratégies marketing efficaces, du référencement payant aux médias sociaux.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <IdentiteVisuelle3D/>
+        <h1 class="text-4xl text-center">Identité visuelle</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Forgez une identité visuelle distinctive qui reflète la personnalité de votre marque à travers le logo, la typographie et la palette de couleurs.</h2>
+        </div>
+
+        <div class="
+        col-span-3
+        overflow-hidden
+        px-8
+        ">
+        <Print3D/>
+        <h1 class="text-4xl text-center">Print</h1>
+        <h2 class="text-lg text-center text-neutral-400 font-body mt-4">Créez des supports imprimés percutants tels que brochures, flyers et cartes de visite pour renforcer votre présence physique.</h2>
+        </div>
+
+        <div class="
+        pt-56
+        pb-24
+        col-span-4
+        text-4xl
+        ">
+        ( 03 )
+        </div>
+
+        <div 
+        class="
+        pt-56
+        pb-24
+        col-span-8
+        text-5xl
+        text-neutral-300
+        flex
+        justify-end
+        ">
+        Contactez-nous
+        </div>
+
+
+        <div class="
+        pb-24
+        col-span-12
+        text-4xl
+        ">
+        <ContactForm/>
+        </div>
+
+
+    
     </div>
-   
+<Footer/>
 </template>

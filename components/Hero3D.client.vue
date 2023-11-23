@@ -1,5 +1,8 @@
   <template>
-    <div id="scene-container"></div>
+    
+    <canvas id="hero">
+
+    </canvas>
 
   </template>
 
@@ -11,9 +14,14 @@
   import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'; // Ensure the correct path to RGBELoader
   import Stats from 'three/examples/jsm/libs/stats.module'
   import * as htmlToImage from 'html-to-image'
-  
+  import { onMounted } from 'vue';
           
   // INIT SCENE
+
+  onMounted(() => {
+
+    
+  })
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(
       75,
@@ -44,12 +52,14 @@ light.decay = 0.45
   const alight = new THREE.AmbientLight( 0x404040 ); // soft white light
   scene.add( alight );
 
-  //RENDERERS
+  //RENDERERS 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true})
   renderer.setClearColor(0x000000,0);
   renderer.shadowMap.enabled = true
   renderer.setPixelRatio( window.devicePixelRatio * 0.7 );
   renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.domElement.style.position = 'absolute';
+renderer.domElement.style.top = '0';
   document.body.appendChild(renderer.domElement)
 
   //MOUSE POS

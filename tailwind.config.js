@@ -15,5 +15,8 @@ module.exports = {
       'display': ['Gotham']
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+  ],
 }
